@@ -26,12 +26,10 @@ def get_distance_measure(x:torch.Tensor, p:int=1):
     Returns:
         [dist] -- [NxN  distance matrix]
     """
-    
     N, D =  x.size()
     dist=torch.repeat_interleave(x, N, dim=1)  
     dist.permute(1,0)
     dist = torch.pow(torch.abs(dist - dist.permute(1,0))**p,1/p)
-
     return  dist
 
 def get_img_from_VI(V, I, width,hard_threshold=False,para=.5):
@@ -68,8 +66,6 @@ def get_img_from_VI(V, I, width,hard_threshold=False,para=.5):
         return Img
     else:
         return (Img/np.max(Img))**para
-
-
 
 
 def paa(series:np.array, emb_size:int, scaler=None):
@@ -128,9 +124,6 @@ def multi_dimension_paa(series:np.array, emb_size:int):
         paa_out[k] = paa(series[k].flatten(), emb_size)
     return paa_out
 
-
-
-
 def create_distance_similarity_matrix(series:np.array, emb_size:int, p:int):
     """[summary]
     
@@ -155,7 +148,6 @@ def create_distance_similarity_matrix(series:np.array, emb_size:int, p:int):
     series = torch.tensor(series).float()
     dist  = get_distance_measure(series, p)
     return dist.unsqueeze(0)
-
 
 def create_N_distance_similarity_matrix(series:np.array, emb_size:int, p:int):
     """[summary]
@@ -200,13 +192,10 @@ def create_N_voltage_current_image(current, voltage, width):
     for k in range(d):
         vi += [create_voltage_current_image(current[:,k,:], voltage[:,k,:], width)]
     vi = torch.cat(vi, 1)
-
     return  vi
 
 
-
-def generate_input_feature(current, voltage, image_type, width=50, multi_dimension=True, p=1):
-        
+def generate_input_feature(current, voltage, image_type, width=50, multi_dimension=True, p=1):        
     if image_type=="vi":
         if  current.ndim==3:
             inputs = create_N_voltage_current_image(current, voltage, width)

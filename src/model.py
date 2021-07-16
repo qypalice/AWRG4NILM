@@ -82,7 +82,6 @@ class Conv2DAdaptiveRecurrence(nn.Module):
         self.con_layer = Conv2D(in_size, out_size, dropout, width)
         
     def forward(self, x):
-        
         x  = self.rec_block(x)
         prediction = self.con_layer(x)
         return prediction

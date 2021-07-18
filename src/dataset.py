@@ -2,7 +2,7 @@ import torch
 import numpy as np
 
 
-def get_correct_labels_lilac(labels):
+def get_correct_labels_lilac(labels):   # correct labels in lilac
     correct_1_phase_motor = [920,923,956, 959, 961, 962, 1188]
     correct_hair = [922, 921, 957, 958,  960, 963, 1181, 1314]
     correct_bulb = [1316]
@@ -21,8 +21,7 @@ def get_correct_labels_lilac(labels):
     return correct_labels
 
 
-def get_data(submetered=True, data_type="lilac", isc=False):
-    
+def get_data(submetered=True, data_type="lilac", isc=False):    # fet .npy data file from the path
 
     if submetered:
         path_sub = f"../data/{data_type}/submetered/"
@@ -38,7 +37,10 @@ def get_data(submetered=True, data_type="lilac", isc=False):
         voltage = np.load(path_sub+"voltage.npy")
         label = np.load(path_sub+"labels.npy")
 
-    
+    if data_type=="lilac":  # correct labels when load dataset
+        print("correct labels for some appliances")
+        label = get_correct_labels_lilac(label)
+
     return current, voltage, label
 
 
@@ -47,10 +49,8 @@ class Dataset(torch.utils.data.Dataset):
 
     def __init__(self, feature,  label, width=50):
        
-        self.feature   = feature
-        self.label    = label
-        
-
+        self.feature  = feature
+        self.label  = label
         
     def __len__(self):
         return len(self.label)
@@ -63,11 +63,11 @@ class Dataset(torch.utils.data.Dataset):
         return feature, label
         
         
-def get_loaders(input_tra, input_val, label_tra, label_val,
+def get_loaders(feature_tra, feature_val, label_tra, label_val,
                 batch_size=64):
    
-    tra_data = Dataset(input_tra, label_tra)
-    val_data = Dataset(input_val, label_val)
+    tra_data = Dataset(feature_tra, label_tra)
+    val_data = Dataset(feature_val, label_val)
     
     tra_loader=torch.utils.data.DataLoader(tra_data, batch_size, shuffle=True, num_workers=4,drop_last=False)
     val_loader=torch.utils.data.DataLoader(val_data, batch_size, shuffle=False, num_workers=4, drop_last=False)

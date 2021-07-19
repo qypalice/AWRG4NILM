@@ -58,7 +58,7 @@ def create_trainer(dataset="lilac", image_type="adaptive", multi_dimension=True,
     # create trainer
     trainer = Trainer(device, model, loss_function, train_loader, test_loader, 
                 in_size=in_size, batch_size=batch_size, eps=eps, delta=10)
-    print(f'Trainer for {dataset} created.\n')
+    print(f'Trainer for {dataset} created.', end = "\n")
     
     return num_class, trainer
 
@@ -71,9 +71,8 @@ def stop_logging(f):
     f.close()
     sys.stdout = sys.__stdout__
 
-def train_the_model(trainer, dataset, image_type, width, multi_dimension=True):
+def train_the_model(trainer, dataset, image_type, epochs, width, multi_dimension=True):
     # define parameters
-    epochs = int(input('Input number of epochs (suggest 100):'))
     file_name=f"{dataset}_{image_type}_{str(width)}"
     if dataset=="lilac" and multi_dimension==False :
         file_name = file_name+"_multi-dimension-norm"
@@ -85,7 +84,7 @@ def train_the_model(trainer, dataset, image_type, width, multi_dimension=True):
     # initialize recording
     experiment_name = 'AWRG-NILM_{}'.format(date.today().strftime('%m-%d-%H-%M'))
     f = start_logging(experiment_name)
-    print(f"Starting {experiment_name} experiment")
+    print(f'Starting {experiment_name} experiment')
 
     # start training
     time_used, train_loss, train_acc,  test_loss, test_acc = trainer.train(epochs,  csv_logger, checkpoint, file_name)
@@ -95,10 +94,15 @@ def train_the_model(trainer, dataset, image_type, width, multi_dimension=True):
 
 def test_the_model(trainer, num_class, checkpoint):
     f1, mcc, zl = trainer.test(num_class, checkpoint)
-    print(f'macro-averaged F1 score: {str(f1)}.\n')
-    print(f'Matthews correlation coefficient (MCC) score: {str(mcc)}.\n')
+    filename = 'AWRG-NILM_{}'.format(date.today().strftime('%m-%d-%H-%M'))
+    f = open('../results/{}.txt'.format(filename), 'w')
+    sys.stdout = f
+    print(f'macro-averaged F1 score: {str(f1)}.')
+    print(f'Matthews correlation coefficient (MCC) score: {str(mcc)}.')
     print(f'Zero-loss score (ZL): {str(zl)}.')
-
+    f.close()
+    sys.stdout = sys.__stdout__
+    
 def fix_random_seed_as(random_seed):
     random.seed(random_seed)
     torch.manual_seed(random_seed)

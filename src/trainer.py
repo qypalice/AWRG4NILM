@@ -10,7 +10,8 @@ import numpy as np
 from abc import *
 from dataset import *
 from visual_functions import *
-
+from sklearn.metrics import f1_score, matthews_corrcoef, zero_one_loss
+from sklearn.preprocessing import MultiLabelBinarizer
 
 torch.set_default_tensor_type(torch.DoubleTensor)
 
@@ -187,9 +188,10 @@ class Trainer(metaclass=ABCMeta):
         pred, test  = self._get_prediction(checkpoint, self.test_loader, num_class)
 
         # get scores
-        f1 = f1_score(test, pred,  average='weighted')
-        mcc  = matthews_corrcoef(test, pred)
-        zl   = zero_one_loss(test, pred)*100
+        m = MultiLabelBinarizer().fit(test)
+        f1 = f1_score(m.transform(test), m.transform(pred), average='weighted')
+        mcc  = matthews_corrcoef(m.transform(test).argmax(axis=1), m.transform(pred).argmax(axis=1))
+        zl   = zero_one_loss(m.transform(test), m.transform(pred))*100
         return f1, mcc, zl
 
     def train_one_epoch(self, epoch):

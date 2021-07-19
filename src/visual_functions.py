@@ -189,8 +189,8 @@ def plot_learning_curve(tra_loss_list, tra_f1_list, val_loss_list, val_f1_list):
     plt.subplot(1,2,2)
     
     line_plot(tra_f1_list, val_f1_list, min_val_score_poss, y_label="Accuracy", y_min=None, y_max=1, best_score=np.max(val_f1_list))
-    plt.subplots_adjust(hspace=0.5)
-    plt.tight_layout(pad=1.0)
+    #plt.subplots_adjust(hspace=0.5)
+    #plt.tight_layout(pad=1.0)
 
 
 

@@ -22,7 +22,7 @@ def get_user_inputs():
     image_type = image_code[input('Input a for AWRG, v for VI-grapth')]
     eps = int(input('Input epsilon (suggest 10):'))
     delta = int(input('Input delta (suggest 10):'))
-    width = int(input('Input delta (suggest 50):'))
+    width = int(input('Input width (suggest 50):'))
     return dataset, image_type, eps, delta, width
 
 
@@ -54,11 +54,11 @@ def create_trainer(dataset="lilac", image_type="adaptive", multi_dimension=True,
     train_loader, test_loader=get_loaders(Xtrain, Xtest, ytrain, ytest, batch_size=batch_size)
     model = Conv2DAdaptiveRecurrence(in_size=in_size, out_size=num_class,
                                             dropout=0.2, eps=eps, delta=delta, width=width)
-
     
     # create trainer
     trainer = Trainer(device, model, loss_function, train_loader, test_loader, 
                 in_size=in_size, batch_size=batch_size, eps=eps, delta=10)
+    print(f'Trainer for {dataset} created.\n')
     
     return num_class, trainer
 
@@ -71,16 +71,16 @@ def stop_logging(f):
     f.close()
     sys.stdout = sys.__stdout__
 
-def train_the_model(trainer, image_type, width, multi_dimension=True):
+def train_the_model(trainer, dataset, image_type, width, multi_dimension=True):
     # define parameters
     epochs = int(input('Input number of epochs (suggest 100):'))
     file_name=f"{dataset}_{image_type}_{str(width)}"
     if dataset=="lilac" and multi_dimension==False :
         file_name = file_name+"_multi-dimension-norm"
-    filename   = '{}_checkpoint.pt'.format(file_name)
+    saved_model_path   = '../weight/{}_checkpoint.pt'.format(file_name)
     csv_logger = CSVLogger(filename=f'../logs/{file_name}.csv',
                        fieldnames=['epoch', 'train_loss', 'test_loss', 'train_acc', 'test_acc'])
-    checkpoint = Checkpoint(filename, patience=100, checkpoint=True, score_mode="max",min_delta=1e-4)
+    checkpoint = Checkpoint(saved_model_path, patience=100, checkpoint=True, score_mode="max",min_delta=1e-4)
     
     # initialize recording
     experiment_name = 'AWRG-NILM_{}'.format(date.today().strftime('%m-%d-%H-%M'))

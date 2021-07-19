@@ -122,19 +122,20 @@ class CSVLogger():
 class Trainer(metaclass=ABCMeta):
     def __init__(self, device, model, loss_function, 
                 train_loader, test_loader, 
-                in_size=1, batch_size=16, eps=10, delta=10):
-        # generate param
-        self.optimizer = torch.optim.SGD(self.model.parameters(), lr=1e-3, momentum=0.9, nesterov=True)
-        self.loss_function = loss_function
-        
+                in_size=1, batch_size=16, eps=10, delta=10):    
         # import param
         self.device = device
         self.model = model.to(device)
-        self.loader = {'train':train_loader, 'test':test_loader}
+        self.loss_function = loss_function
+        self.train_loader = train_loader
+        self.test_loader = test_loader
         self.in_size = in_size
         self.batch_size = batch_size
         self.eps = eps
         self.delta = delta
+        
+        # generate param
+        self.optimizer = torch.optim.SGD(self.model.parameters(), lr=1e-3, momentum=0.9, nesterov=True)
 
     def train(self,  epochs,  csv_logger, checkpoint, file_name):
         # initialize parameters
@@ -177,8 +178,8 @@ class Trainer(metaclass=ABCMeta):
         time_used   = end_time - start_time
 
         # record training process
-        plot_learning_curve(train_loss, train_acc, test_loss, test_acc)
-        savefig(f"../figure/temp/{file_name}",format=".pdf")
+        #plot_learning_curve(train_loss, train_acc, test_loss, test_acc)
+        #savefig(f"../figure{file_name}",format=".pdf")
         return time_used, train_loss, train_acc,  test_loss, test_acc
 
     def test(self, num_class, checkpoint):
@@ -196,7 +197,7 @@ class Trainer(metaclass=ABCMeta):
         loss_avg = 0.
         score_count = 0.
         total = 0.
-        progress_bar = tqdm(self.loader)
+        progress_bar = tqdm(self.train_loader)
         
         # show progress
         for i, data in enumerate(progress_bar):
@@ -205,12 +206,13 @@ class Trainer(metaclass=ABCMeta):
             images, labels=data
             images = images.to(self.device)
             labels = labels.to(self.device)
+            labels_long = labels.to(device=self.device, dtype=torch.int64)
             
             self.model.zero_grad()
             
             pred= self.model(images)
                 
-            loss = self.loss_function(pred, labels)
+            loss = self.loss_function(pred, labels_long)
             score = self._get_accuracy(pred, labels)
             total += labels.size(0)
             score_count += score.sum()
@@ -241,10 +243,10 @@ class Trainer(metaclass=ABCMeta):
             
                 images = images.to(self.device)
                 labels = labels.to(self.device)
-                
+                labels_long = labels.to(device=self.device, dtype=torch.int64)
                 
                 pred = self.model(images)
-                loss = self.loss_function(pred, labels)
+                loss = self.loss_function(pred, labels_long)
                 score = self._get_accuracy(pred, labels).mean()
                 
                 
@@ -254,7 +256,7 @@ class Trainer(metaclass=ABCMeta):
         self.model.train()
         return np.mean(running_loss), np.mean(running_acc)
 
-    def _weight_init(m):    
+    def _weight_init(self, m):    
         if isinstance(m, nn.Conv2d):
             init.xavier_normal_(m.weight.data)
             if m.bias is not None:
@@ -271,7 +273,7 @@ class Trainer(metaclass=ABCMeta):
             init.xavier_normal_(m.weight.data)
             init.normal_(m.bias.data)
 
-    def _get_accuracy(y_pred:torch.Tensor, y_true:torch.Tensor, softmax:bool=True):
+    def _get_accuracy(self, y_pred:torch.Tensor, y_true:torch.Tensor, softmax:bool=True):
         "Compute multi class accuracy when `y_pred` and `y_true` are the same size."
         if softmax: y_pred = torch.softmax(y_pred, 1)
         _, y_pred = torch.max(y_pred.data, 1)

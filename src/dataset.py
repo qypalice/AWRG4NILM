@@ -72,6 +72,4 @@ def get_loaders(feature_tra, feature_val, label_tra, label_val,
     tra_loader=torch.utils.data.DataLoader(tra_data, batch_size, shuffle=True, num_workers=4,drop_last=False)
     val_loader=torch.utils.data.DataLoader(val_data, batch_size, shuffle=False, num_workers=4, drop_last=False)
     
-    loaders = {'train':tra_loader, 'val':val_loader}
-    
-    return loaders  
+    return tra_loader, val_loader

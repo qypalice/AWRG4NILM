@@ -121,14 +121,6 @@ def figure(fig_width=None, fig_height=None, columns=2):
     fig = plt.figure(figsize=(fig_width, fig_height))
     return fig
 
-def subplots(fig_width=None, fig_height=None, *args, **kwargs):
-    """
-    Returns subplots with an appropriate figure size and tight layout.
-    """
-    fig_width, fig_height = get_width_height(fig_width, fig_height, columns=2)
-    fig, axes = plt.subplots(figsize=(fig_width, fig_height), *args, **kwargs)
-    return fig, axes
-
 def legend(ax, ncol=3, loc=9, pos=(0.5, -0.1)):
     leg=ax.legend(loc=loc, bbox_to_anchor=pos, ncol=ncol)
     return leg
@@ -293,27 +285,6 @@ def get_Fmeasure(cm, n):
     av = av/len(n)*100
     return av
     
-    
-def vis_results(true, pred, dataset, fig_path):
-    
-    cm = confusion_matrix(true, pred)
-    plot_Fmeasure(cm, apps[dataset], title=None)
-    savefig(f"{fig_path}_fm",format=".pdf")
-    
-    if dataset=="whited":
-         fig, ax = plt.subplots(figsize=(12, 10))
-    else:
-         fig, ax = plt.subplots(figsize=(10, 8))
-    plot_confusion_matrix(cm, apps[dataset], title=None)
-   
-    
-    
-def get_fscore(true, pred, dataset):
-    cm = confusion_matrix(true, pred)
-    f1 = get_Fmeasure(cm, apps[dataset])
-    return f1
-
-
 
 def get_fscore(cm, names):
     av = 0

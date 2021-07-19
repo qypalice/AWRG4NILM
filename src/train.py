@@ -1,185 +1,107 @@
-from tqdm import tqdm
 import torch
-import torch.nn as nn
-import torch.nn.functional as F
 import numpy as np
-import torch
 import sys
+from temp import *
 from trainer import *
-from functools import partial
+from datetime import date
+import random
+import warnings
+warnings.filterwarnings("ignore")
+from sklearn.preprocessing import LabelEncoder
+from sklearn.model_selection import StratifiedKFold
+from model import Conv2DAdaptiveRecurrence
+from get_feature  import generate_input_feature
+from dataset import *
+
+torch.set_default_tensor_type(torch.DoubleTensor)
+
+def get_user_inputs():
+    dataset_code = {'l': 'lilac', 'p': 'plaid'}
+    dataset = dataset_code[input('Input l for lilac, p for plaid)')]
+    image_code = {'a':'adaptive', 'v':'vi'}
+    image_type = image_code[input('Input a for AWRG, v for VI-grapth')]
+    eps = int(input('Input epsilon (suggest 10):'))
+    delta = int(input('Input delta (suggest 10):'))
+    width = int(input('Input delta (suggest 50):'))
+    return dataset, image_type, eps, delta, width
 
 
-def test(model, loss_function, loader, device, metric_fn):
-    model.eval()    # Change model to 'eval' mode (BN uses moving mean/var).
+def create_trainer(dataset="lilac", image_type="adaptive", multi_dimension=True, batch_size=16,
+            width = 50, eps=10, delta=10):
+    # define parameters - input data
+    in_size = 3 if dataset=="lilac" and multi_dimension==True else 1
+    current, voltage, labels = get_data(submetered=False, data_type=dataset, isc=False)
     
-    running_loss = []
-    running_acc = []
+    # get input features
+    input_feature = generate_input_feature(current, voltage, image_type, width, multi_dimension)
     
-    with torch.no_grad():
+    #perform label enconding
+    le = LabelEncoder()
+    le.fit(labels)
+    y = le.transform(labels)
 
-        for i, data in enumerate(loader):
-            
-            images, labels=data
-        
-            images = images.to(device)
-            labels = labels.to(device)
-            
-            
-            pred = model(images)
-            loss = loss_function(pred, labels)
-            score = metric_fn(pred, labels).mean()
-            
-            
-        
-            running_loss.append(loss.item())
-            running_acc.append(score.item())
-            
-        
-       
-        
+    # split the data
+    skf = StratifiedKFold(n_splits=4,random_state=42,shuffle=True)
+    train_index, test_index = next(skf.split(current, y))
+    Xtrain, Xtest = input_feature[train_index], input_feature[test_index]
+    ytrain, ytest = y[train_index], y[test_index]
     
+    # define other parameters
+    device = "cuda:0" if torch.cuda.is_available() else "cpu"
+    loss_function = torch.nn.CrossEntropyLoss().to(device)
+    classes=list(np.unique(ytrain))
+    num_class=len(classes)
+    train_loader, test_loader=get_loaders(Xtrain, Xtest, ytrain, ytest, batch_size=batch_size)
+    model = Conv2DAdaptiveRecurrence(in_size=in_size, out_size=num_class,
+                                            dropout=0.2, eps=eps, delta=delta, width=width)
+
     
+    # create trainer
+    trainer = Trainer(device, model, loss_function, train_loader, test_loader, 
+                in_size=in_size, batch_size=batch_size, eps=eps, delta=10)
     
+    return num_class, trainer
 
-        
+def start_logging(filename):
+    f = open('../logs/experiment-{}.txt'.format(filename), 'w')
+    sys.stdout = f
+    return f
+
+def stop_logging(f):
+    f.close()
+    sys.stdout = sys.__stdout__
+
+def train_the_model(trainer, image_type, width, multi_dimension=True):
+    # define parameters
+    epochs = int(input('Input number of epochs (suggest 100):'))
+    file_name=f"{dataset}_{image_type}_{str(width)}"
+    if dataset=="lilac" and multi_dimension==False :
+        file_name = file_name+"_multi-dimension-norm"
+    filename   = '{}_checkpoint.pt'.format(file_name)
+    csv_logger = CSVLogger(filename=f'../logs/{file_name}.csv',
+                       fieldnames=['epoch', 'train_loss', 'test_loss', 'train_acc', 'test_acc'])
+    checkpoint = Checkpoint(filename, patience=100, checkpoint=True, score_mode="max",min_delta=1e-4)
     
-    model.train()
-    return np.mean(running_loss), np.mean(running_acc)
+    # initialize recording
+    experiment_name = 'AWRG-NILM_{}'.format(date.today().strftime('%m-%d-%H-%M'))
+    f = start_logging(experiment_name)
+    print(f"Starting {experiment_name} experiment")
 
+    # start training
+    time_used, train_loss, train_acc,  test_loss, test_acc = trainer.train(epochs,  csv_logger, checkpoint, file_name)
+    stop_logging(f)
 
-def train(model, loss_function, optimizer, loader, device, epoch, metric_fn):
-    model.train()
-    loss_avg = 0.
-    score_count = 0.
-    total = 0.
-    
-    progress_bar = tqdm(loader)
-    for i, data in enumerate(progress_bar):
-        progress_bar.set_description('Epoch ' + str(epoch))
-        
-        
-        images, labels=data
-        images = images.to(device)
-        labels = labels.to(device)
-        
-        model.zero_grad()
-        
-        pred= model(images)
-            
-        loss = loss_function(pred, labels)
-        score = metric_fn(pred, labels)
-        total += labels.size(0)
-        score_count += score.sum()
-        accuracy = score_count.double() / total
-        
+    return checkpoint
 
-        
-        
-        loss.backward()
-        torch.nn.utils.clip_grad_norm_(model.parameters(), 10.)
-        optimizer.step()
-        
-        loss_avg +=loss.item()
-       
-        
+def test_the_model(trainer, num_class, checkpoint):
+    f1, mcc, zl = trainer.test(num_class, checkpoint)
+    print(f'macro-averaged F1 score: {str(f1)}.\n')
+    print(f'Matthews correlation coefficient (MCC) score: {str(mcc)}.\n')
+    print(f'Zero-loss score (ZL): {str(zl)}.')
 
-        progress_bar.set_postfix(
-            loss='%.3f' % (loss_avg / (i + 1)),
-            score='%.3f' % accuracy)
-    return loss_avg / (i + 1), accuracy
+def fix_random_seed_as(random_seed):
+    random.seed(random_seed)
+    torch.manual_seed(random_seed)
+    torch.cuda.manual_seed_all(random_seed)
+    np.random.seed(random_seed)
 
-
-def perform_training(epochs, model, train_loader, test_loader, optimizer, loss_function,
-                    device, checkpoint, metric_fn, csv_logger):
-    
-    train_loss = []
-    train_acc  = []
-    test_loss  = []
-    test_acc   = []
-    model = model.to(device)
-    
-    
-    for epoch in range(epochs):
-        loss_tra, score_tra = train(model, loss_function, optimizer, train_loader, device, epoch, metric_fn)
-        loss_tra, score_tra  = test(model, loss_function,train_loader, device, metric_fn)
-        train_loss.append(loss_tra)
-        train_acc.append(score_tra)
-        
-        loss_test, score_test  = test(model, loss_function, test_loader, device, metric_fn)
-        test_loss.append(loss_test)
-        test_acc.append(score_test)
-        
-        tqdm.write('test_loss: %.3f, test_score: %.4f' % (loss_test, score_test))
-        states = {
-                    'epoch': epoch+1,
-                    'state_dict': model.state_dict()
-                }
-
-        row = {'epoch': str(epoch), 'train_loss': str(loss_tra), 'test_loss': str(loss_test),
-                'train_acc': str(score_tra), 'test_acc': str(score_test)}
-        
-        csv_logger.writerow(row)
-        if checkpoint.early_stopping(score_test, states) and (epoch+1)>=int(epochs*0.5):
-            tqdm.write("Early stopping with {:.3f} best score, the model did not improve after {} iterations".format(
-                    checkpoint.best, checkpoint.num_bad_epochs))
-            break
-
-        
-    csv_logger.close()
-    
-    return train_loss, train_acc,  test_loss, test_acc
-
-
-
-def get_prediction(model, dataloader, checkpoint, device, num_class):
-    
-
-    model=checkpoint.load_saved_model(model)
-    model.eval()
-    num_elements = dataloader.len if hasattr(dataloader, 'len') else len(dataloader.dataset)
-    batch_size   = dataloader.batchsize if hasattr(dataloader, 'len') else dataloader.batch_size
-    num_batches = len(dataloader)
-
-    predictions = torch.zeros(num_elements, num_class)
-    correct_labels = torch.zeros(num_elements, num_class)
-
-    values = range(num_batches)
-    
-    with tqdm(total=len(values), file=sys.stdout) as pbar:
-    
-        with torch.no_grad():
-            for i, data in enumerate(dataloader):
-            
-                start = i*batch_size
-                end = start + batch_size
-
-                if i == num_batches - 1:
-                    end = num_elements
-                
-                
-                inputs, labels = data
-               
-                inputs = inputs.to(device)
-                labels = labels.to(device)
-                
-                out = model(inputs)
-                    
-                
-                pred = torch.softmax(out, 1)
-                prob, pred = torch.max(pred.data, 1)
-                
-                predictions[start:end] = pred.unsqueeze(1)
-                correct_labels[start:end] = labels.unsqueeze(1).long()
-            
-                pbar.set_description('processed: %d' % (1 + i))
-                pbar.update(1)
-            pbar.close()
-
-            
-
-    predictions = predictions.cpu().numpy()
-    correct_labels = correct_labels.cpu().numpy()
-    assert(num_elements == len(predictions))
-    
-    
-    return predictions, correct_labels

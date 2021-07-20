@@ -1,0 +1,112 @@
+Starting lilac_vi_50_07-19-23-30 experiment
+test_loss: 2.564, test_score: 0.1247
+test_loss: 1.918, test_score: 0.4819
+save best model
+test_loss: 1.323, test_score: 0.5739
+save best model
+test_loss: 1.085, test_score: 0.6507
+save best model
+test_loss: 0.932, test_score: 0.7167
+save best model
+test_loss: 0.791, test_score: 0.7227
+save best model
+test_loss: 0.758, test_score: 0.7681
+save best model
+test_loss: 0.724, test_score: 0.7492
+test_loss: 0.817, test_score: 0.7449
+test_loss: 0.724, test_score: 0.7538
+test_loss: 0.726, test_score: 0.7919
+save best model
+test_loss: 0.660, test_score: 0.7716
+test_loss: 0.617, test_score: 0.8217
+save best model
+test_loss: 0.644, test_score: 0.8098
+test_loss: 0.629, test_score: 0.8101
+test_loss: 0.666, test_score: 0.7879
+test_loss: 0.644, test_score: 0.8103
+test_loss: 0.763, test_score: 0.7700
+test_loss: 0.628, test_score: 0.8071
+test_loss: 0.618, test_score: 0.8187
+test_loss: 0.677, test_score: 0.8209
+test_loss: 0.622, test_score: 0.8293
+save best model
+test_loss: 0.655, test_score: 0.8057
+test_loss: 0.634, test_score: 0.8220
+test_loss: 0.637, test_score: 0.8101
+test_loss: 0.583, test_score: 0.8101
+test_loss: 0.625, test_score: 0.8263
+test_loss: 0.701, test_score: 0.8117
+test_loss: 0.705, test_score: 0.8044
+test_loss: 0.730, test_score: 0.7852
+test_loss: 0.624, test_score: 0.8206
+test_loss: 0.688, test_score: 0.8295
+save best model
+test_loss: 0.740, test_score: 0.8220
+test_loss: 0.714, test_score: 0.8071
+test_loss: 0.797, test_score: 0.8087
+test_loss: 0.756, test_score: 0.8071
+test_loss: 0.785, test_score: 0.8130
+test_loss: 0.854, test_score: 0.8179
+test_loss: 0.688, test_score: 0.8160
+test_loss: 0.714, test_score: 0.8236
+test_loss: 0.775, test_score: 0.8101
+test_loss: 0.758, test_score: 0.8157
+test_loss: 0.751, test_score: 0.8130
+test_loss: 0.811, test_score: 0.8220
+test_loss: 0.809, test_score: 0.8163
+test_loss: 0.824, test_score: 0.8147
+test_loss: 0.814, test_score: 0.8160
+test_loss: 0.827, test_score: 0.8147
+test_loss: 0.792, test_score: 0.8103
+test_loss: 0.828, test_score: 0.8087
+test_loss: 0.970, test_score: 0.8190
+test_loss: 0.847, test_score: 0.8044
+test_loss: 0.922, test_score: 0.8295
+test_loss: 0.824, test_score: 0.8147
+test_loss: 0.942, test_score: 0.8160
+test_loss: 0.915, test_score: 0.8147
+test_loss: 0.924, test_score: 0.8147
+test_loss: 0.870, test_score: 0.8206
+test_loss: 0.978, test_score: 0.8190
+test_loss: 0.950, test_score: 0.8220
+test_loss: 0.995, test_score: 0.8176
+test_loss: 0.950, test_score: 0.8249
+test_loss: 1.101, test_score: 0.8130
+test_loss: 1.069, test_score: 0.8147
+test_loss: 1.079, test_score: 0.8101
+test_loss: 1.050, test_score: 0.8190
+test_loss: 1.024, test_score: 0.8103
+test_loss: 1.062, test_score: 0.8117
+test_loss: 1.063, test_score: 0.8147
+test_loss: 1.109, test_score: 0.8130
+test_loss: 1.069, test_score: 0.8117
+test_loss: 1.094, test_score: 0.8147
+test_loss: 1.159, test_score: 0.8206
+test_loss: 1.063, test_score: 0.8190
+test_loss: 1.106, test_score: 0.8220
+test_loss: 1.120, test_score: 0.8160
+test_loss: 1.137, test_score: 0.8220
+test_loss: 1.117, test_score: 0.8220
+test_loss: 1.038, test_score: 0.8222
+test_loss: 1.143, test_score: 0.8101
+test_loss: 1.107, test_score: 0.8249
+test_loss: 1.113, test_score: 0.8130
+test_loss: 1.187, test_score: 0.8160
+test_loss: 1.168, test_score: 0.8130
+test_loss: 1.013, test_score: 0.8220
+test_loss: 1.138, test_score: 0.8101
+test_loss: 1.133, test_score: 0.8249
+test_loss: 1.193, test_score: 0.8220
+test_loss: 1.163, test_score: 0.8220
+test_loss: 1.103, test_score: 0.8339
+save best model
+test_loss: 1.180, test_score: 0.8130
+test_loss: 1.124, test_score: 0.8293
+test_loss: 1.151, test_score: 0.8220
+test_loss: 1.221, test_score: 0.8190
+test_loss: 1.222, test_score: 0.8220
+test_loss: 1.236, test_score: 0.8206
+test_loss: 1.197, test_score: 0.8190
+test_loss: 1.186, test_score: 0.8176
+test_loss: 1.214, test_score: 0.8117
+test_loss: 1.205, test_score: 0.8176

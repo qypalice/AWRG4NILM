@@ -1,0 +1,115 @@
+Starting plaid_adaptive_50_07-19-23-38 experiment
+test_loss: 1.983, test_score: 0.3307
+test_loss: 1.174, test_score: 0.6120
+save best model
+test_loss: 0.949, test_score: 0.6901
+save best model
+test_loss: 0.774, test_score: 0.6771
+test_loss: 0.571, test_score: 0.8568
+save best model
+test_loss: 0.536, test_score: 0.8750
+save best model
+test_loss: 0.501, test_score: 0.8516
+test_loss: 0.365, test_score: 0.8984
+save best model
+test_loss: 0.324, test_score: 0.9036
+save best model
+test_loss: 0.313, test_score: 0.9193
+save best model
+test_loss: 0.285, test_score: 0.9193
+test_loss: 0.281, test_score: 0.9219
+save best model
+test_loss: 0.250, test_score: 0.9479
+save best model
+test_loss: 0.330, test_score: 0.8880
+test_loss: 0.223, test_score: 0.9479
+test_loss: 0.239, test_score: 0.9349
+test_loss: 0.238, test_score: 0.9401
+test_loss: 0.196, test_score: 0.9531
+save best model
+test_loss: 0.174, test_score: 0.9531
+test_loss: 0.190, test_score: 0.9453
+test_loss: 0.162, test_score: 0.9531
+test_loss: 0.194, test_score: 0.9479
+test_loss: 0.179, test_score: 0.9427
+test_loss: 0.205, test_score: 0.9401
+test_loss: 0.189, test_score: 0.9401
+test_loss: 0.178, test_score: 0.9453
+test_loss: 0.205, test_score: 0.9375
+test_loss: 0.179, test_score: 0.9531
+test_loss: 0.149, test_score: 0.9505
+test_loss: 0.181, test_score: 0.9531
+test_loss: 0.192, test_score: 0.9479
+test_loss: 0.148, test_score: 0.9557
+save best model
+test_loss: 0.193, test_score: 0.9479
+test_loss: 0.157, test_score: 0.9583
+save best model
+test_loss: 0.145, test_score: 0.9583
+test_loss: 0.145, test_score: 0.9583
+test_loss: 0.155, test_score: 0.9583
+test_loss: 0.159, test_score: 0.9505
+test_loss: 0.149, test_score: 0.9583
+test_loss: 0.133, test_score: 0.9688
+save best model
+test_loss: 0.143, test_score: 0.9661
+test_loss: 0.122, test_score: 0.9661
+test_loss: 0.144, test_score: 0.9635
+test_loss: 0.129, test_score: 0.9661
+test_loss: 0.169, test_score: 0.9479
+test_loss: 0.146, test_score: 0.9453
+test_loss: 0.146, test_score: 0.9479
+test_loss: 0.138, test_score: 0.9609
+test_loss: 0.153, test_score: 0.9609
+test_loss: 0.130, test_score: 0.9661
+test_loss: 0.173, test_score: 0.9505
+test_loss: 0.138, test_score: 0.9609
+test_loss: 0.157, test_score: 0.9609
+test_loss: 0.145, test_score: 0.9661
+test_loss: 0.177, test_score: 0.9531
+test_loss: 0.128, test_score: 0.9635
+test_loss: 0.127, test_score: 0.9661
+test_loss: 0.140, test_score: 0.9609
+test_loss: 0.144, test_score: 0.9635
+test_loss: 0.164, test_score: 0.9505
+test_loss: 0.160, test_score: 0.9635
+test_loss: 0.134, test_score: 0.9609
+test_loss: 0.149, test_score: 0.9557
+test_loss: 0.131, test_score: 0.9661
+test_loss: 0.133, test_score: 0.9688
+test_loss: 0.146, test_score: 0.9635
+test_loss: 0.133, test_score: 0.9688
+test_loss: 0.158, test_score: 0.9531
+test_loss: 0.142, test_score: 0.9688
+test_loss: 0.148, test_score: 0.9609
+test_loss: 0.145, test_score: 0.9583
+test_loss: 0.148, test_score: 0.9609
+test_loss: 0.156, test_score: 0.9583
+test_loss: 0.138, test_score: 0.9609
+test_loss: 0.157, test_score: 0.9557
+test_loss: 0.148, test_score: 0.9661
+test_loss: 0.138, test_score: 0.9609
+test_loss: 0.135, test_score: 0.9688
+test_loss: 0.137, test_score: 0.9688
+test_loss: 0.141, test_score: 0.9661
+test_loss: 0.155, test_score: 0.9635
+test_loss: 0.146, test_score: 0.9635
+test_loss: 0.140, test_score: 0.9661
+test_loss: 0.149, test_score: 0.9635
+test_loss: 0.136, test_score: 0.9635
+test_loss: 0.127, test_score: 0.9688
+test_loss: 0.130, test_score: 0.9661
+test_loss: 0.131, test_score: 0.9688
+test_loss: 0.141, test_score: 0.9609
+test_loss: 0.141, test_score: 0.9714
+save best model
+test_loss: 0.156, test_score: 0.9557
+test_loss: 0.134, test_score: 0.9661
+test_loss: 0.141, test_score: 0.9557
+test_loss: 0.140, test_score: 0.9688
+test_loss: 0.141, test_score: 0.9661
+test_loss: 0.135, test_score: 0.9714
+test_loss: 0.160, test_score: 0.9531
+test_loss: 0.141, test_score: 0.9661
+test_loss: 0.132, test_score: 0.9714
+test_loss: 0.132, test_score: 0.9714

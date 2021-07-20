@@ -1,9 +1,8 @@
 import torch
 import numpy as np
 import sys
-from temp import *
 from trainer import *
-from datetime import date
+from datetime import datetime
 import random
 import warnings
 warnings.filterwarnings("ignore")
@@ -12,6 +11,7 @@ from sklearn.model_selection import StratifiedKFold
 from model import Conv2DAdaptiveRecurrence
 from get_feature  import generate_input_feature
 from dataset import *
+import matplotlib.pyplot as plt
 
 torch.set_default_tensor_type(torch.DoubleTensor)
 
@@ -82,7 +82,7 @@ def train_the_model(trainer, dataset, image_type, epochs, width, multi_dimension
     checkpoint = Checkpoint(saved_model_path, patience=100, checkpoint=True, score_mode="max",min_delta=1e-4)
     
     # initialize recording
-    experiment_name = 'AWRG-NILM_{}'.format(date.today().strftime('%m-%d-%H-%M'))
+    experiment_name = file_name+'_{}'.format(datetime.utcnow().strftime('%m-%d-%H-%M'))
     f = start_logging(experiment_name)
     print(f'Starting {experiment_name} experiment')
 
@@ -90,11 +90,32 @@ def train_the_model(trainer, dataset, image_type, epochs, width, multi_dimension
     time_used, train_loss, train_acc,  test_loss, test_acc = trainer.train(epochs,  csv_logger, checkpoint, file_name)
     stop_logging(f)
 
-    return checkpoint
+    return checkpoint, file_name
 
-def test_the_model(trainer, num_class, checkpoint):
+def plot_learning_curve(file_name):
+    # read data
+    filename=f'../logs/{file_name}.csv'
+    Data = np.loadtxt(open(filename),delimiter=",",skiprows=1)
+    epoch = Data[:,0]
+    train_loss = Data[:,1]
+    train_acc = Data[:,2]
+    test_loss = Data[:,3]
+    test_acc = Data[:,4]
+    
+    # plot data
+    labels = ['train_loss', 'test_loss', 'train_acc', 'test_acc']
+    colors = ['r','y','g','b','m','k']
+    fit =plt.figure()
+    plt.plot(epoch, train_loss, color='r')
+    plt.plot(epoch, train_acc, color='g')
+    plt.plot(epoch, test_loss, color='k')
+    plt.plot(epoch, test_acc, color='b')
+    #plt.legend(labels=labels)
+    plt.show() 
+
+def test_the_model(trainer, num_class, checkpoint, file_name):
     f1, mcc, zl = trainer.test(num_class, checkpoint)
-    filename = 'AWRG-NILM_{}'.format(date.today().strftime('%m-%d-%H-%M'))
+    filename = file_name+'_{}'.format(datetime.utcnow().strftime('%m-%d-%H-%M'))
     f = open('../results/{}.txt'.format(filename), 'w')
     sys.stdout = f
     print(f'macro-averaged F1 score: {str(f1)}.')

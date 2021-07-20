@@ -1,0 +1,23 @@
+Starting lilac_adaptive_50_07-19-23-17 experiment
+test_loss: 2.328, test_score: 0.1621
+test_loss: 2.109, test_score: 0.2646
+save best model
+test_loss: 1.773, test_score: 0.4402
+save best model
+test_loss: 1.481, test_score: 0.4253
+test_loss: 1.330, test_score: 0.5844
+save best model
+test_loss: 1.112, test_score: 0.6142
+save best model
+test_loss: 0.922, test_score: 0.6916
+save best model
+test_loss: 0.914, test_score: 0.6737
+test_loss: 0.757, test_score: 0.7400
+save best model
+test_loss: 0.709, test_score: 0.7762
+save best model
+test_loss: 0.686, test_score: 0.7698
+test_loss: 0.675, test_score: 0.7638
+Load lilac aggregated data from ../data/lilac/aggregated/
+correct labels for some appliances
+Trainer for lilac created.

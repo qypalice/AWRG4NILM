@@ -9,7 +9,6 @@ import csv
 import numpy as np
 from abc import *
 from dataset import *
-from visual_functions import *
 from sklearn.metrics import f1_score, matthews_corrcoef, zero_one_loss
 from sklearn.preprocessing import MultiLabelBinarizer
 

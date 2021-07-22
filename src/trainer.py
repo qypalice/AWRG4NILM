@@ -19,7 +19,7 @@ class Checkpoint(object):
     def __init__(self,filename: str=None, patience: int =20, checkpoint: bool = False, score_mode: str="max",
                  min_delta: float=1e-4, save_final_model: bool = False):
 
-        self.saved_model_path = '../checkpoint/'+filename
+        self.saved_model_path = filename
         self.checkpoint = checkpoint
         self.save_final_model = save_final_model
         self.patience = patience

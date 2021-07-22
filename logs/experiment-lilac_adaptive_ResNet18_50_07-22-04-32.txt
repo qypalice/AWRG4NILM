@@ -1,0 +1,36 @@
+Starting lilac_adaptive_ResNet18_50_07-22-04-32 experiment
+test_loss: 0.421, test_score: 0.8915
+test_loss: 0.320, test_score: 0.9064
+save best model
+test_loss: 0.255, test_score: 0.9510
+save best model
+test_loss: 0.248, test_score: 0.9364
+test_loss: 0.233, test_score: 0.9481
+test_loss: 0.216, test_score: 0.9570
+save best model
+test_loss: 0.227, test_score: 0.9540
+test_loss: 0.231, test_score: 0.9570
+test_loss: 0.198, test_score: 0.9600
+save best model
+test_loss: 0.261, test_score: 0.9332
+test_loss: 0.225, test_score: 0.9510
+test_loss: 0.232, test_score: 0.9510
+test_loss: 0.231, test_score: 0.9540
+test_loss: 0.230, test_score: 0.9570
+test_loss: 0.308, test_score: 0.9334
+test_loss: 0.215, test_score: 0.9540
+test_loss: 0.261, test_score: 0.9540
+test_loss: 0.243, test_score: 0.9510
+test_loss: 0.224, test_score: 0.9659
+save best model
+test_loss: 0.207, test_score: 0.9600
+test_loss: 0.241, test_score: 0.9540
+test_loss: 0.219, test_score: 0.9540
+test_loss: 0.253, test_score: 0.9481
+test_loss: 0.254, test_score: 0.9540
+test_loss: 0.236, test_score: 0.9629
+test_loss: 0.224, test_score: 0.9540
+test_loss: 0.220, test_score: 0.9570
+test_loss: 0.232, test_score: 0.9629
+test_loss: 0.229, test_score: 0.9629
+test_loss: 0.224, test_score: 0.9481

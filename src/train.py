@@ -8,7 +8,7 @@ import warnings
 warnings.filterwarnings("ignore")
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import StratifiedKFold
-from model import Conv2DAdaptiveRecurrence
+from model import GetModel
 from get_feature  import generate_input_feature
 from dataset import *
 import matplotlib.pyplot as plt
@@ -17,16 +17,18 @@ torch.set_default_tensor_type(torch.DoubleTensor)
 
 def get_user_inputs():
     dataset_code = {'l': 'lilac', 'p': 'plaid'}
-    dataset = dataset_code[input('Input l for lilac, p for plaid)')]
+    dataset = dataset_code[input('Input l for lilac, p for plaid): ')]
     image_code = {'a':'adaptive', 'v':'vi'}
-    image_type = image_code[input('Input a for AWRG, v for VI-grapth')]
-    eps = int(input('Input epsilon (suggest 10):'))
-    delta = int(input('Input delta (suggest 10):'))
-    width = int(input('Input width (suggest 50):'))
-    return dataset, image_type, eps, delta, width
+    image_type = image_code[input('Input a for AWRG, v for VI-grapth:' )]
+    model_code = {'c':'CNN', 'r18':'ResNet18','r34':'ResNet34','r50':'ResNet50','r101':'ResNet101','r152':'ResNet152'}
+    model_name = model_code[input('Input c for CNN, r18 for ResNet18, r50 for ResNet50, r101 for ResNet101, r152 for ResNet152: ')]
+    eps = int(input('Input epsilon (suggest 10): '))
+    delta = int(input('Input delta (suggest 10): '))
+    width = int(input('Input width (suggest 50): '))
+    return dataset, image_type, model_name, eps, delta, width
 
 
-def create_trainer(dataset="lilac", image_type="adaptive", multi_dimension=True, batch_size=16,
+def create_trainer(dataset="lilac", image_type="adaptive", model_name="CNN", multi_dimension=True, batch_size=16,
             width = 50, eps=10, delta=10):
     # define parameters - input data
     in_size = 3 if dataset=="lilac" and multi_dimension==True else 1
@@ -52,8 +54,7 @@ def create_trainer(dataset="lilac", image_type="adaptive", multi_dimension=True,
     classes=list(np.unique(ytrain))
     num_class=len(classes)
     train_loader, test_loader=get_loaders(Xtrain, Xtest, ytrain, ytest, batch_size=batch_size)
-    model = Conv2DAdaptiveRecurrence(in_size=in_size, out_size=num_class,
-                                            dropout=0.2, eps=eps, delta=delta, width=width)
+    model = GetModel(model_name,in_size=in_size, out_size=num_class, dropout=0.2, eps=eps, delta=delta, width=width)
     
     # create trainer
     trainer = Trainer(device, model, loss_function, train_loader, test_loader, 
@@ -71,9 +72,9 @@ def stop_logging(f):
     f.close()
     sys.stdout = sys.__stdout__
 
-def train_the_model(trainer, dataset, image_type, epochs, width, multi_dimension=True):
+def train_the_model(trainer, dataset, image_type, model_name, epochs, width, multi_dimension=True):
     # define parameters
-    file_name=f"{dataset}_{image_type}_{str(width)}"
+    file_name=f"{dataset}_{image_type}_{model_name}_{str(width)}"
     if dataset=="lilac" and multi_dimension==False :
         file_name = file_name+"_multi-dimension-norm"
     saved_model_path   = '../weight/{}_checkpoint.pt'.format(file_name)
@@ -110,7 +111,7 @@ def plot_learning_curve(file_name):
     plt.plot(epoch, train_acc, color='g')
     plt.plot(epoch, test_loss, color='k')
     plt.plot(epoch, test_acc, color='b')
-    #plt.legend(labels=labels)
+    plt.legend(labels=labels)
     plt.show() 
 
 def test_the_model(trainer, num_class, checkpoint, file_name):

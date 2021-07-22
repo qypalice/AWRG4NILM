@@ -1,0 +1,4 @@
+macro-averaged F1 score: 0.9637803897158588.
+Matthews correlation coefficient (MCC) score: 0.9612285377466576.
+Zero-loss score (ZL): 3.625377643504535.
+for ResNet18

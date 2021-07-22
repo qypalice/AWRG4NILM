@@ -1,0 +1,114 @@
+Starting lilac_adaptive_CNN_50_07-22-04-23 experiment
+test_loss: 1.732, test_score: 0.4594
+test_loss: 0.855, test_score: 0.6650
+save best model
+test_loss: 0.595, test_score: 0.7892
+save best model
+test_loss: 0.614, test_score: 0.7792
+test_loss: 0.490, test_score: 0.8417
+save best model
+test_loss: 0.409, test_score: 0.8358
+test_loss: 0.425, test_score: 0.8804
+save best model
+test_loss: 0.487, test_score: 0.7881
+test_loss: 0.429, test_score: 0.8090
+test_loss: 0.355, test_score: 0.9080
+save best model
+test_loss: 0.351, test_score: 0.9213
+save best model
+test_loss: 0.332, test_score: 0.8872
+test_loss: 0.369, test_score: 0.8669
+test_loss: 0.312, test_score: 0.9085
+test_loss: 0.329, test_score: 0.9183
+test_loss: 0.311, test_score: 0.9064
+test_loss: 0.275, test_score: 0.9481
+save best model
+test_loss: 0.328, test_score: 0.9026
+test_loss: 0.298, test_score: 0.8669
+test_loss: 0.290, test_score: 0.9272
+test_loss: 0.250, test_score: 0.9510
+save best model
+test_loss: 0.252, test_score: 0.9540
+save best model
+test_loss: 0.232, test_score: 0.9380
+test_loss: 0.252, test_score: 0.9451
+test_loss: 0.318, test_score: 0.9050
+test_loss: 0.323, test_score: 0.9391
+test_loss: 0.261, test_score: 0.9085
+test_loss: 0.267, test_score: 0.9145
+test_loss: 0.225, test_score: 0.9540
+test_loss: 0.235, test_score: 0.9570
+save best model
+test_loss: 0.218, test_score: 0.9570
+test_loss: 0.224, test_score: 0.9570
+test_loss: 0.218, test_score: 0.9570
+test_loss: 0.210, test_score: 0.9600
+save best model
+test_loss: 0.218, test_score: 0.9540
+test_loss: 0.252, test_score: 0.9378
+test_loss: 0.229, test_score: 0.9540
+test_loss: 0.221, test_score: 0.9570
+test_loss: 0.218, test_score: 0.9540
+test_loss: 0.226, test_score: 0.9278
+test_loss: 0.224, test_score: 0.9540
+test_loss: 0.207, test_score: 0.9600
+test_loss: 0.212, test_score: 0.9540
+test_loss: 0.227, test_score: 0.9510
+test_loss: 0.217, test_score: 0.9629
+save best model
+test_loss: 0.209, test_score: 0.9600
+test_loss: 0.229, test_score: 0.9510
+test_loss: 0.209, test_score: 0.9540
+test_loss: 0.220, test_score: 0.9570
+test_loss: 0.213, test_score: 0.9600
+test_loss: 0.203, test_score: 0.9600
+test_loss: 0.204, test_score: 0.9570
+test_loss: 0.205, test_score: 0.9540
+test_loss: 0.208, test_score: 0.9540
+test_loss: 0.224, test_score: 0.9570
+test_loss: 0.214, test_score: 0.9540
+test_loss: 0.227, test_score: 0.9600
+test_loss: 0.206, test_score: 0.9540
+test_loss: 0.227, test_score: 0.9540
+test_loss: 0.219, test_score: 0.9510
+test_loss: 0.177, test_score: 0.9629
+test_loss: 0.219, test_score: 0.9570
+test_loss: 0.221, test_score: 0.9600
+test_loss: 0.219, test_score: 0.9629
+test_loss: 0.217, test_score: 0.9600
+test_loss: 0.209, test_score: 0.9629
+test_loss: 0.214, test_score: 0.9540
+test_loss: 0.208, test_score: 0.9570
+test_loss: 0.181, test_score: 0.9659
+save best model
+test_loss: 0.194, test_score: 0.9600
+test_loss: 0.204, test_score: 0.9659
+test_loss: 0.199, test_score: 0.9600
+test_loss: 0.196, test_score: 0.9600
+test_loss: 0.204, test_score: 0.9629
+test_loss: 0.201, test_score: 0.9540
+test_loss: 0.205, test_score: 0.9570
+test_loss: 0.215, test_score: 0.9600
+test_loss: 0.200, test_score: 0.9629
+test_loss: 0.189, test_score: 0.9570
+test_loss: 0.206, test_score: 0.9540
+test_loss: 0.178, test_score: 0.9600
+test_loss: 0.218, test_score: 0.9570
+test_loss: 0.204, test_score: 0.9510
+test_loss: 0.176, test_score: 0.9659
+test_loss: 0.206, test_score: 0.9570
+test_loss: 0.202, test_score: 0.9600
+test_loss: 0.201, test_score: 0.9570
+test_loss: 0.215, test_score: 0.9659
+test_loss: 0.214, test_score: 0.9510
+test_loss: 0.199, test_score: 0.9600
+test_loss: 0.203, test_score: 0.9600
+test_loss: 0.215, test_score: 0.9570
+test_loss: 0.197, test_score: 0.9570
+test_loss: 0.202, test_score: 0.9600
+test_loss: 0.203, test_score: 0.9659
+test_loss: 0.233, test_score: 0.9600
+test_loss: 0.219, test_score: 0.9570
+test_loss: 0.216, test_score: 0.9600
+test_loss: 0.207, test_score: 0.9629
+test_loss: 0.213, test_score: 0.9540

@@ -1,0 +1,3 @@
+macro-averaged F1 score: 0.972683407315248.
+Matthews correlation coefficient (MCC) score: 0.9708572280445043.
+Zero-loss score (ZL): 2.7190332326283984.

@@ -20,8 +20,10 @@ def get_user_inputs():
     dataset = dataset_code[input('Input l for lilac, p for plaid): ')]
     image_code = {'a':'adaptive', 'v':'vi'}
     image_type = image_code[input('Input a for AWRG, v for VI-grapth:' )]
-    model_code = {'c':'CNN', 'r18':'ResNet18','r34':'ResNet34','r50':'ResNet50','r101':'ResNet101','r152':'ResNet152'}
-    model_name = model_code[input('Input c for CNN, r18 for ResNet18, r50 for ResNet50, r101 for ResNet101, r152 for ResNet152: ')]
+    model_code = {'c':'CNN', 'r18':'ResNet18','r34':'ResNet34','r50':'ResNet50','r101':'ResNet101','r152':'ResNet152',\
+        'es':'EffiNet_small', 'em':'EffiNet_medium', 'el':'EffiNet_large', 'exl':'EffiNet_extra_large'}
+    model_name = model_code[input('''Input c for CNN, r18 for ResNet18, r50 for ResNet50, r101 for ResNet101, r152 for ResNet152, 
+    es for EffiNet_small, em for EffiNet_medium, el for EffiNet_large, exl for EffiNet_extra_large: ''')]
     eps = int(input('Input epsilon (suggest 10): '))
     delta = int(input('Input delta (suggest 10): '))
     width = int(input('Input width (suggest 50): '))

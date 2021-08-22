@@ -1,8 +1,0 @@
-Starting lilac_adaptive_50_07-22-01-38 experiment
-test_loss: 1.069, test_score: 0.5809
-test_loss: 1.732, test_score: 0.6069
-save best model
-test_loss: 1.634, test_score: 0.6404
-save best model
-test_loss: 2.048, test_score: 0.5706
-test_loss: 2.392, test_score: 0.4700
